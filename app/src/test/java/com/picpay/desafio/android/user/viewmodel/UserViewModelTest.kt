@@ -2,9 +2,9 @@ package com.picpay.desafio.android.user.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.picpay.desafio.android.user.CoroutineTestRule
-import com.picpay.desafio.android.user.exception.UserEmptyException
 import com.picpay.desafio.android.user.mock.UserMock
 import com.picpay.desafio.android.user.usecase.UserUseCase
+import com.picpay.desafio.android.user.usecase.exception.UserEmptyException
 import com.picpay.desafio.android.user.viewmodel.status.UserStatus
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -36,7 +36,8 @@ class UserViewModelTest {
     @Test
     fun `ao consultar e o useCase estiver fora deve retornar UserStatus falha`() {
         val useCase: UserUseCase = mockk()
-        val exception = UserEmptyException()
+        val exception =
+            UserEmptyException()
         coEvery { useCase.getUsers() } returns UserMock.mockUserFailure(exception)
         val viewModel = UserViewModel(useCase)
         runBlocking {

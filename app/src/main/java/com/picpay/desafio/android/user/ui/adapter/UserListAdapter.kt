@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.user
+package com.picpay.desafio.android.user.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -24,7 +24,9 @@ class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListItemViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_user, parent, false)
-        return UserListItemViewHolder(view)
+        return UserListItemViewHolder(
+            view
+        )
     }
 
     override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {

@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.user.database.constants
+package com.picpay.desafio.android.user.repository.local.database.constants
 
 object DataBaseConstants {
     const val DATABASE_NAME = "USER_DATABASE"

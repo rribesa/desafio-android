@@ -1,4 +1,4 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.user.ui.activity
 
 import android.os.Bundle
 import android.view.View
@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.picpay.desafio.android.user.UserListAdapter
+import com.picpay.desafio.android.R
 import com.picpay.desafio.android.user.model.User
+import com.picpay.desafio.android.user.ui.adapter.UserListAdapter
 import com.picpay.desafio.android.user.viewmodel.UserViewModel
 import com.picpay.desafio.android.user.viewmodel.status.UserStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel

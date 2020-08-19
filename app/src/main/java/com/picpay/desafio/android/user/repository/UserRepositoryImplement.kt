@@ -1,13 +1,13 @@
 package com.picpay.desafio.android.user.repository
 
-import com.picpay.desafio.android.user.database.UserDataBase
-import com.picpay.desafio.android.user.database.entity.UserEntity
-import com.picpay.desafio.android.user.exception.UserDatabaseException
-import com.picpay.desafio.android.user.exception.UserServiceException
 import com.picpay.desafio.android.user.model.User
-import com.picpay.desafio.android.user.service.UserService
-import com.picpay.desafio.android.user.service.data.UserResponse
-import com.picpay.desafio.android.user.service.data.mapResponseEntity
+import com.picpay.desafio.android.user.repository.local.database.UserDataBase
+import com.picpay.desafio.android.user.repository.local.database.entity.UserEntity
+import com.picpay.desafio.android.user.repository.local.database.exception.UserDatabaseException
+import com.picpay.desafio.android.user.repository.remote.service.UserService
+import com.picpay.desafio.android.user.repository.remote.service.data.UserResponse
+import com.picpay.desafio.android.user.repository.remote.service.data.mapResponseEntity
+import com.picpay.desafio.android.user.repository.remote.service.exception.UserServiceException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -39,7 +39,9 @@ class UserRepositoryImplement(
             Result.success(dataBase.userDAO().getAllUsers())
         } catch (exception: Exception) {
             Result.failure<List<UserResponse>>(
-                UserDatabaseException(exception)
+                UserDatabaseException(
+                    exception
+                )
             )
         }
     }

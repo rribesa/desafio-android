@@ -1,7 +1,5 @@
-package com.picpay.desafio.android.user.model
+package com.picpay.desafio.android.user.repository.remote.service.data
 
-import com.picpay.desafio.android.user.service.data.UserResponse
-import com.picpay.desafio.android.user.service.data.mapResponseEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertNotNull
 import org.junit.Test

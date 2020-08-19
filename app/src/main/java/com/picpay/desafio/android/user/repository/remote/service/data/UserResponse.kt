@@ -1,8 +1,8 @@
-package com.picpay.desafio.android.user.service.data
+package com.picpay.desafio.android.user.repository.remote.service.data
 
 import com.google.gson.annotations.SerializedName
-import com.picpay.desafio.android.user.database.entity.UserEntity
 import com.picpay.desafio.android.user.model.User
+import com.picpay.desafio.android.user.repository.local.database.entity.UserEntity
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

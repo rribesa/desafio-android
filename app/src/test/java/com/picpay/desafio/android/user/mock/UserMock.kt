@@ -1,8 +1,8 @@
 package com.picpay.desafio.android.user.mock
 
-import com.picpay.desafio.android.user.database.entity.UserEntity
 import com.picpay.desafio.android.user.model.User
-import com.picpay.desafio.android.user.service.data.UserResponse
+import com.picpay.desafio.android.user.repository.local.database.entity.UserEntity
+import com.picpay.desafio.android.user.repository.remote.service.data.UserResponse
 
 object UserMock {
 

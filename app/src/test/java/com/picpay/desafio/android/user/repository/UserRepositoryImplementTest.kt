@@ -1,9 +1,9 @@
 package com.picpay.desafio.android.user.repository
 
-import com.picpay.desafio.android.user.database.UserDataBase
-import com.picpay.desafio.android.user.exception.UserServiceException
 import com.picpay.desafio.android.user.mock.UserMock
-import com.picpay.desafio.android.user.service.UserService
+import com.picpay.desafio.android.user.repository.local.database.UserDataBase
+import com.picpay.desafio.android.user.repository.remote.service.UserService
+import com.picpay.desafio.android.user.repository.remote.service.exception.UserServiceException
 import io.mockk.coEvery
 import io.mockk.just
 import io.mockk.mockk

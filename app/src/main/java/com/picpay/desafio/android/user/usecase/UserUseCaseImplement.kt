@@ -1,9 +1,9 @@
 package com.picpay.desafio.android.user.usecase
 
-import com.picpay.desafio.android.user.exception.UserEmptyException
-import com.picpay.desafio.android.user.exception.UserServiceException
 import com.picpay.desafio.android.user.model.User
 import com.picpay.desafio.android.user.repository.UserRepository
+import com.picpay.desafio.android.user.repository.remote.service.exception.UserServiceException
+import com.picpay.desafio.android.user.usecase.exception.UserEmptyException
 
 class UserUseCaseImplement(private val repository: UserRepository) : UserUseCase {
     override suspend fun getUsers(): Result<List<User>> {

@@ -1,8 +1,8 @@
 package com.picpay.desafio.android.user.usecase
 
-import com.picpay.desafio.android.user.exception.UserServiceException
 import com.picpay.desafio.android.user.mock.UserMock
 import com.picpay.desafio.android.user.repository.UserRepository
+import com.picpay.desafio.android.user.repository.remote.service.exception.UserServiceException
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -32,7 +32,10 @@ class UserUseCaseImplementTest {
     @Test
     fun `ao consultar getUsers e o servico estiver fora e houver cache dever retornar sucesso`() {
         val repository: UserRepository = mockk()
-        val exception = UserServiceException(IOException("mockError"))
+        val exception =
+            UserServiceException(
+                IOException("mockError")
+            )
         coEvery { repository.getUsers() } throws exception
         coEvery { repository.getUsersCache() } returns UserMock.mockUserSuccess()
         val useCase: UserUseCase = UserUseCaseImplement(repository)
@@ -62,7 +65,10 @@ class UserUseCaseImplementTest {
     @Test
     fun `ao consultar getUsers e o servico estiver fora e base vazia deve retornar falha`() {
         val repository: UserRepository = mockk()
-        val exception = UserServiceException(IOException("mockError"))
+        val exception =
+            UserServiceException(
+                IOException("mockError")
+            )
         coEvery { repository.getUsers() } throws exception
         coEvery { repository.getUsersCache() } returns UserMock.mockUserSuccessEmpty()
         val useCase: UserUseCase = UserUseCaseImplement(repository)
@@ -78,7 +84,10 @@ class UserUseCaseImplementTest {
     @Test
     fun `ao consultar getUsers e o servico estiver fora e base fora deve retornar falha`() {
         val repository: UserRepository = mockk()
-        val exception = UserServiceException(IOException("mockError"))
+        val exception =
+            UserServiceException(
+                IOException("mockError")
+            )
         coEvery { repository.getUsers() } throws exception
         coEvery { repository.getUsersCache() } returns UserMock.mockUserFailure(exception)
         val useCase: UserUseCase = UserUseCaseImplement(repository)

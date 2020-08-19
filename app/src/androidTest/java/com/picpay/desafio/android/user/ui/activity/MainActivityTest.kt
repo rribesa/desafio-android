@@ -1,4 +1,4 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.user.ui.activity
 
 import androidx.lifecycle.Lifecycle
 import androidx.room.Room
@@ -9,8 +9,10 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import br.com.ribeiro.network.WebClient
-import com.picpay.desafio.android.user.database.UserDataBase
-import com.picpay.desafio.android.user.service.constants.ServiceConstant
+import com.picpay.desafio.android.R
+import com.picpay.desafio.android.RecyclerViewMatchers
+import com.picpay.desafio.android.user.repository.local.database.UserDataBase
+import com.picpay.desafio.android.user.repository.remote.service.constants.ServiceConstant
 import io.mockk.every
 import io.mockk.mockkObject
 import okhttp3.mockwebserver.MockResponse
@@ -67,7 +69,10 @@ class MainActivityTest {
         mockSucces()
         launchActivity<MainActivity>().apply {
             moveToState(Lifecycle.State.RESUMED)
-            RecyclerViewMatchers.atPosition(0, withText("@eduardo.santos"))
+            RecyclerViewMatchers.atPosition(
+                0,
+                withText("@eduardo.santos")
+            )
         }
         server.shutdown()
     }
