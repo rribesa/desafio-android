@@ -1,6 +1,6 @@
 # PicPay - Desafio Android
 
-[![CircleCI](https://circleci.com/gh/rribesa/desafio-android/tree/master.svg?style=svg)](https://app.circleci.com/pipelines/github/rribesa/desafio-android/tree/master)
+[![CircleCI](https://circleci.com/gh/rribesa/desafio-android/tree/master.svg?style=svg)](https://app.circleci.com/pipelines/github/rribesa/desafio-android?branch=master)
 
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
