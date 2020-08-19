@@ -1,0 +1,23 @@
+version: 2.1
+
+orbs:
+ android: circleci/android@0.2.0
+
+jobs:
+  build:
+    executor: android/android
+        
+    steps:
+      - checkout
+      - run:
+          name: Chmod Permissions #if permission for Gradlew Dependencies fail, use this.
+          command: sudo chmod +x ./gradlew
+      - run:
+          name: Build
+          command: ./gradlew build
+      - run:
+          name: Check Code Style
+          command: ./gradlew clean ktlintCheck --no-daemon
+      - run:
+          name: Check Unit Tests
+          command: ./gradlew clean test --no-daemon
