@@ -18,17 +18,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
     private val progressBar: ProgressBar by lazy { findViewById<ProgressBar>(R.id.user_list_progress_bar) }
-    private lateinit var adapter: UserListAdapter
-    private val viewmodel: UserViewModel by viewModel()
+    private val adapter: UserListAdapter = UserListAdapter()
+    private val viewModel: UserViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observeStates()
-        viewmodel.fetch()
+        viewModel.fetch()
     }
 
     private fun observeStates() {
-        viewmodel.state.observe(this, Observer { state ->
+        viewModel.state.observe(this, Observer { state ->
             state?.let {
                 when (it) {
                     is UserStatus.UserError -> showError()
@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onResume() {
         super.onResume()
-        adapter = UserListAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         progressBar.visibility = View.VISIBLE
