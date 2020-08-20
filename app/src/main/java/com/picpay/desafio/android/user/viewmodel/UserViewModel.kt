@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.user.model.User
+import com.picpay.desafio.android.user.repository.local.database.exception.UserDatabaseException
+import com.picpay.desafio.android.user.repository.remote.service.exception.UserServiceException
 import com.picpay.desafio.android.user.usecase.UserUseCase
+import com.picpay.desafio.android.user.usecase.exception.UserEmptyException
 import com.picpay.desafio.android.user.viewmodel.status.UserStatus
 import kotlinx.coroutines.launch
 
@@ -26,8 +29,17 @@ class UserViewModel(private val useCase: UserUseCase) : ViewModel() {
             }
         } else {
             result.exceptionOrNull()?.let {
-                _state.postValue(UserStatus.UserError(it))
+                interpretException(it)
             }
+        }
+    }
+
+    private fun interpretException(error: Throwable) {
+        when (error) {
+            is UserEmptyException -> _state.postValue(UserStatus.UserEmptyError(error))
+            is UserDatabaseException -> _state.postValue(UserStatus.UserDatabaseError(error))
+            is UserServiceException -> _state.postValue(UserStatus.UserNetworkError(error))
+            else -> _state.postValue(UserStatus.UserError(error))
         }
     }
 }
