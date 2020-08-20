@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.picpay.desafio.android.user.CoroutineTestRule
 import com.picpay.desafio.android.user.mock.UserMock
 import com.picpay.desafio.android.user.repository.local.database.exception.UserDatabaseException
-import com.picpay.desafio.android.user.repository.remote.service.exception.UserServiceException
 import com.picpay.desafio.android.user.usecase.UserUseCase
 import com.picpay.desafio.android.user.usecase.exception.UserEmptyException
 import com.picpay.desafio.android.user.viewmodel.status.UserStatus
@@ -26,7 +25,7 @@ class UserViewModelTest {
     val scope = CoroutineTestRule()
 
     @Test
-    fun `ao consultar e o useCase estiver ok deve retornar UserStatus Success`() {
+    fun `deve ter UserStatusSucces ao executar o fetch quando a usecase getusers estiver ok e a lista nao for vazia`() {
         val useCase: UserUseCase = mockk()
         coEvery { useCase.getUsers() } returns UserMock.mockUserSuccess()
         val viewModel = UserViewModel(useCase)
@@ -37,7 +36,7 @@ class UserViewModelTest {
     }
 
     @Test
-    fun `ao consultar e o useCase estiver vazia deve retornar UserStatus falha`() {
+    fun `deve ter UserStatusEmptyError ao executar o fetch quando a usecase getusers estiver ok e a lista for vazia`() {
         val useCase: UserUseCase = mockk()
         val exception =
             UserEmptyException()
@@ -50,20 +49,7 @@ class UserViewModelTest {
     }
 
     @Test
-    fun `ao consultar e o useCase estiver erro de network deve retornar UserStatus falha`() {
-        val useCase: UserUseCase = mockk()
-        val exception =
-            UserServiceException(IOException("mock"))
-        coEvery { useCase.getUsers() } returns UserMock.mockUserFailure(exception)
-        val viewModel = UserViewModel(useCase)
-        runBlocking {
-            viewModel.fetch()
-            assertEquals(UserStatus.UserNetworkError(exception), viewModel.state.value)
-        }
-    }
-
-    @Test
-    fun `ao consultar e o useCase estiver erro de database deve retornar UserStatus falha`() {
+    fun `deve ter UserDatabaseError ao executar o fetch quando a usecase getusers estiver com alguma exception que foi tratada`() {
         val useCase: UserUseCase = mockk()
         val exception = UserDatabaseException(IOException("mock"))
         coEvery { useCase.getUsers() } returns UserMock.mockUserFailure(exception)
@@ -75,7 +61,7 @@ class UserViewModelTest {
     }
 
     @Test
-    fun `ao consultar e o useCase estiver erro nao tratado deve retornar UserStatus falha`() {
+    fun `deve ter UserError ao executar o fetch quando a usecase getusers estiver com alguma exception desconhecida`() {
         val useCase: UserUseCase = mockk()
         val exception = NullPointerException("mock")
         coEvery { useCase.getUsers() } returns UserMock.mockUserFailure(exception)

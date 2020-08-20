@@ -1,7 +1,7 @@
 package com.picpay.desafio.android.user.repository
 
 import com.picpay.desafio.android.user.mock.UserMock
-import com.picpay.desafio.android.user.repository.local.database.UserDataBase
+import com.picpay.desafio.android.user.repository.local.UserLocalDataSource
 import com.picpay.desafio.android.user.repository.remote.service.UserService
 import com.picpay.desafio.android.user.repository.remote.service.exception.UserServiceException
 import io.mockk.coEvery
@@ -32,10 +32,10 @@ class UserRepositoryImplementTest {
 
     @Test
     fun `ao chamar o getUsersCache com database ok deve retorar result Success`() {
-        val dataBase: UserDataBase = mockk()
-        coEvery { dataBase.userDAO().getAllUsers() } returns UserMock.mockUserEntity()
-        coEvery { dataBase.userDAO().deleteAndInsert(UserMock.mockUserEntity()) } just runs
-        val repository: UserRepository = UserRepositoryImplement(mockk(), dataBase)
+        val local: UserLocalDataSource = mockk()
+        coEvery { local.getAllUsers() } returns UserMock.mockUserEntity()
+        coEvery { local.deleteAndInsert(UserMock.mockUserEntity()) } just runs
+        val repository: UserRepository = UserRepositoryImplement(mockk(), local)
         runBlocking {
             val result = repository.getUsersCache()
             assertTrue(result.isSuccess)
@@ -47,11 +47,11 @@ class UserRepositoryImplementTest {
 
     @Test
     fun `ao chamar o getUsersCache com database com error deve retorar result Failure`() {
-        val dataBase: UserDataBase = mockk()
+        val local: UserLocalDataSource = mockk()
         val exception = IOException("mockError")
-        coEvery { dataBase.userDAO().getAllUsers() } throws exception
-        coEvery { dataBase.userDAO().deleteAndInsert(UserMock.mockUserEntity()) } just runs
-        val repository: UserRepository = UserRepositoryImplement(mockk(), dataBase)
+        coEvery { local.getAllUsers() } throws exception
+        coEvery { local.deleteAndInsert(UserMock.mockUserEntity()) } just runs
+        val repository: UserRepository = UserRepositoryImplement(mockk(), local)
         runBlocking {
             val result = repository.getUsersCache()
             assertTrue(result.isFailure)
@@ -64,12 +64,12 @@ class UserRepositoryImplementTest {
     @Test
     fun `ao chamar o getUsers quando o servico estiver ok deve retornar user list`() {
         val service: UserService = mockk()
-        val dataBase: UserDataBase = mockk()
+        val local: UserLocalDataSource = mockk()
         coEvery { service.getUsers() } returns UserMock.mockUserResponse()
-        coEvery { dataBase.userDAO().getAllUsers() } returns UserMock.mockUserEntity()
-        coEvery { dataBase.userDAO().deleteAndInsert(UserMock.mockUserEntity()) } just runs
+        coEvery { local.getAllUsers() } returns UserMock.mockUserEntity()
+        coEvery { local.deleteAndInsert(UserMock.mockUserEntity()) } just runs
 
-        val repository: UserRepository = UserRepositoryImplement(service, dataBase)
+        val repository: UserRepository = UserRepositoryImplement(service, local)
         runBlocking {
             val result = repository.getUsers()
             assertTrue(result.isSuccess)

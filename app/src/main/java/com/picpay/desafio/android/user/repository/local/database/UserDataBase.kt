@@ -2,7 +2,6 @@ package com.picpay.desafio.android.user.repository.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.picpay.desafio.android.user.repository.local.UserLocalDatalSource
 import com.picpay.desafio.android.user.repository.local.database.constants.DataBaseConstants
 import com.picpay.desafio.android.user.repository.local.database.dao.UserDAO
 import com.picpay.desafio.android.user.repository.local.database.entity.UserEntity
@@ -12,6 +11,6 @@ import com.picpay.desafio.android.user.repository.local.database.entity.UserEnti
     entities = [UserEntity::class],
     exportSchema = false
 )
-abstract class UserDataBase : UserLocalDatalSource, RoomDatabase() {
+abstract class UserDataBase : RoomDatabase() {
     abstract fun userDAO(): UserDAO
 }

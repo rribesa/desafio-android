@@ -4,6 +4,7 @@ import androidx.room.Room
 import br.com.ribeiro.network.WebClient
 import com.picpay.desafio.android.user.repository.UserRepository
 import com.picpay.desafio.android.user.repository.UserRepositoryImplement
+import com.picpay.desafio.android.user.repository.local.UserLocalDataSource
 import com.picpay.desafio.android.user.repository.local.database.UserDataBase
 import com.picpay.desafio.android.user.repository.local.database.constants.DataBaseConstants
 import com.picpay.desafio.android.user.repository.remote.service.UserService
@@ -19,7 +20,12 @@ object UserDI {
     private val viewModelModule = module {
         viewModel { UserViewModel(useCase = get()) }
         factory { UserUseCaseImplement(repository = get()) as UserUseCase }
-        factory { UserRepositoryImplement(service = get(), dataBase = get()) as UserRepository }
+        factory {
+            UserRepositoryImplement(
+                remoteDataSource = get(),
+                localDataSource = get()
+            ) as UserRepository
+        }
         single { WebClient.service<UserService>(ServiceConstant.URL) }
         single {
             Room.databaseBuilder(
@@ -29,7 +35,7 @@ object UserDI {
             )
                 .build()
         }
-        single { get<UserDataBase>().userDAO() }
+        single { get<UserDataBase>().userDAO() as UserLocalDataSource }
     }
 
     fun init() = loadKoinModules(viewModelModule)

@@ -5,13 +5,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.picpay.desafio.android.user.repository.local.UserLocalDataSource
 import com.picpay.desafio.android.user.repository.local.database.entity.UserEntity
 
 @Dao
-interface UserDAO {
+interface UserDAO : UserLocalDataSource {
 
     @Query("SELECT * FROM User")
-    suspend fun getAllUsers(): List<UserEntity>
+    override suspend fun getAllUsers(): List<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllUsers(users: List<UserEntity>)
@@ -20,7 +21,7 @@ interface UserDAO {
     suspend fun deleteAllUsers()
 
     @Transaction
-    suspend fun deleteAndInsert(users: List<UserEntity>) {
+    override suspend fun deleteAndInsert(users: List<UserEntity>) {
         deleteAllUsers()
         insertAllUsers(users)
     }
