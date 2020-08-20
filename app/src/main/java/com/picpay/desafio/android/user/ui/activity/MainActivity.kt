@@ -15,7 +15,7 @@ import com.picpay.desafio.android.user.viewmodel.status.UserStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
-    private val adapter: UserListAdapter = UserListAdapter()
+    private val adapter: UserListAdapter by lazy { UserListAdapter() }
     private val viewModel: UserViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.state.observe(this, Observer { state ->
             state?.let {
                 when (it) {
-                    is UserStatus.UserError -> showError()
                     is UserStatus.UserSuccess -> showUserList(it.users)
+                    else -> showError()
                 }
             }
         })
