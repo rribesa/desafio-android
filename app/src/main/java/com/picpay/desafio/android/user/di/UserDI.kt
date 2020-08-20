@@ -7,6 +7,7 @@ import com.picpay.desafio.android.user.repository.UserRepositoryImplement
 import com.picpay.desafio.android.user.repository.local.UserLocalDataSource
 import com.picpay.desafio.android.user.repository.local.database.UserDataBase
 import com.picpay.desafio.android.user.repository.local.database.constants.DataBaseConstants
+import com.picpay.desafio.android.user.repository.remote.UserRemoteDataSource
 import com.picpay.desafio.android.user.repository.remote.service.UserService
 import com.picpay.desafio.android.user.repository.remote.service.constants.ServiceConstant
 import com.picpay.desafio.android.user.usecase.UserUseCase
@@ -26,7 +27,7 @@ object UserDI {
                 localDataSource = get()
             ) as UserRepository
         }
-        single { WebClient.service<UserService>(ServiceConstant.URL) }
+        single { WebClient.service<UserService>(ServiceConstant.URL) as UserRemoteDataSource }
         single {
             Room.databaseBuilder(
                 get(),
